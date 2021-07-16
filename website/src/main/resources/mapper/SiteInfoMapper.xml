@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.delcache.website.erp.mapper.SiteInfoMapper">
+    <sql id="condition">
+        <where>
+            <if test="adminId!=null and adminId!=''">
+                admin_id=#{adminId}
+            </if>
+            <if test="status!=null and status!=''">
+                and status=#{status}
+            </if>
+            <if test="adminId!=null and adminId!=''">
+                and admin_id=#{adminId}
+            </if>
+            <if test="username!=null and username!=''">
+                and username=#{username}
+            </if>
+            <if test="username_like!=null and username_like!=''">
+                and username like "%"#{username_like}"%"
+            </if>
+            <if test="realname_like!=null and realname_like!=''">
+                and realname like "%"#{realname_like}"%"
+            </if>
+            <if test="realname!=null and realname!=''">
+                and realname=#{realname}
+            </if>
+            <if test="token!=null and token!=''">
+                and token=#{token}
+            </if>
+            <if test="condition!=null and condition!=''">
+                and ${condition}
+            </if>
+        </where>
+    </sql>
+    <select id="selectList" parameterType="Map" resultType="com.delcache.website.common.domain.SiteInfo">
+        select * from tbl_site_info
+        <include refid="condition"/>
+        <if test="limit!=null and limit!=''">
+            limit ${limit}
+        </if>
+    </select>
+
+    <select id="count" parameterType="Map" resultType="Integer">
+        select count(*) from tbl_site_info
+        <include refid="condition"/>
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultType="com.delcache.website.common.domain.SiteInfo">
+        select * from tbl_site_info
+        <include refid="condition"/>
+        limit 1
+    </select>
+    <insert id="insert" parameterType="com.delcache.website.common.domain.SiteInfo" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into tbl_site_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="webName!=null">`web_name`,</if>
+            <if test="webHost!=null">`web_host`,</if>
+            <if test="webIp!=null">`web_ip`,</if>
+            <if test="defaultPassword!=null">`default_password`,</if>
+            <if test="wechatAppId!=null">`wechat_app_id`,</if>
+            <if test="wechatAppSecret!=null">`wechat_app_secret`,</if>
+            <if test="wechatMchId!=null">`wechat_mch_id`,</if>
+            <if test="wechatPayKey!=null">`wechat_pay_key`,</if>
+            <if test="wechatNotify!=null">`wechat_notify`,</if>
+            <if test="appLogo!=null">`app_logo`,</if>
+            <if test="aboutUs!=null">`about_us`,</if>
+            <if test="createTime!=null">`create_time`,</if>
+            <if test="updateTime!=null">`update_time`,</if>
+        </trim>
+        value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="webName!=null">#{webName},</if>
+            <if test="webHost!=null">#{webHost},</if>
+            <if test="webIp!=null">#{webIp},</if>
+            <if test="defaultPassword!=null">#{defaultPassword},</if>
+            <if test="wechatAppId!=null">#{wechatAppId},</if>
+            <if test="wechatAppSecret!=null">#{wechatAppSecret},</if>
+            <if test="wechatMchId!=null">#{wechatMchId},</if>
+            <if test="wechatPayKey!=null">#{wechatPayKey},</if>
+            <if test="wechatNotify!=null">#{wechatNotify},</if>
+            <if test="appLogo!=null">#{appLogo},</if>
+            <if test="aboutUs!=null">#{aboutUs},</if>
+            <if test="createTime!=null">#{createTime},</if>
+            <if test="updateTime!=null">#{updateTime},</if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.delcache.website.common.domain.SiteInfo">
+        update tbl_site_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="webName!=null">web_name=#{webName},</if>
+            <if test="webHost!=null">web_host=#{webHost},</if>
+            <if test="webIp!=null">web_ip=#{webIp},</if>
+            <if test="defaultPassword!=null">default_password=#{defaultPassword},</if>
+            <if test="wechatAppId!=null">wechat_app_id=#{wechatAppId},</if>
+            <if test="wechatAppSecret!=null">wechat_app_secret=#{wechatAppSecret},</if>
+            <if test="wechatMchId!=null">wechat_mch_id=#{wechatMchId},</if>
+            <if test="wechatPayKey!=null">wechat_pay_key=#{wechatPayKey},</if>
+            <if test="wechatNotify!=null">wechat_notify=#{wechatNotify},</if>
+            <if test="appLogo!=null">app_logo=#{appLogo},</if>
+            <if test="aboutUs!=null">about_us=#{aboutUs},</if>
+            <if test="updateTime!=null">update_time=#{updateTime},</if>
+        </trim>
+        where id=#{id}
+    </update>
+</mapper>

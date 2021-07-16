@@ -1,0 +1,17 @@
+server:
+  port: 6000
+
+spring:
+  application:
+    name: website
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 121.40.224.59:8848
+      config:
+        server-addr: 121.40.224.59:8848
+        file-extension: yml
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}

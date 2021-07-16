@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.delcache.website.system.mapper.DictDataMapper">
+    <sql id="condition">
+        <where>
+            <if test="id!=null and id!=''">
+                id=#{id}
+            </if>
+            <if test="dictName!=null and dictName!=''">
+                and dict_name=#{dictName}
+            </if>
+            <if test="dictType!=null and dictType!=''">
+                and dict_type=#{dictType}
+            </if>
+            <if test="status!=null and status!=''">
+                and status=#{status}
+            </if>
+            <if test="condition!=null and condition!=''">
+                and ${condition}
+            </if>
+        </where>
+    </sql>
+    <select id="count" parameterType="Map" resultType="java.lang.Integer">
+        select count(*) from tbl_dict_data
+        <include refid="condition"/>
+    </select>
+    <select id="selectList" parameterType="Map" resultType="com.delcache.website.common.domain.DictData">
+        select * from tbl_dict_data
+        <include refid="condition"/>
+        <if test="limit!=null and limit!=''">
+            limit ${limit}
+        </if>
+    </select>
+    <select id="selectOne" parameterType="Map" resultType="com.delcache.website.common.domain.DictData">
+        select * from tbl_dict_data
+        <include refid="condition"/>
+        limit 1
+    </select>
+    <select id="getDataList" parameterType="Map" resultType="com.delcache.website.common.domain.Dict">
+        select dict_label as title,dict_value as `value` from tbl_dict_data
+        <include refid="condition"/>
+        order by `sort` asc,id desc
+    </select>
+    <update id="update" parameterType="com.delcache.website.common.domain.DictData">
+        update tbl_dict_data
+        <trim prefix="set" suffixOverrides=",">
+            <if test="sort!=null">sort=#{sort},</if>
+            <if test="dictLabel!=null">dict_label=#{dictLabel},</if>
+            <if test="dictValue!=null">dict_value=#{dictValue},</if>
+            <if test="dictType!=null">dict_type=#{dictType},</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="updateBy!=null">update_by=#{updateBy},</if>
+            <if test="remark!=null">remark=#{remark},</if>
+            <if test="updateTime!=null">update_time=#{updateTime},</if>
+        </trim>
+        where id=#{id}
+    </update>
+    <insert id="insert" parameterType="com.delcache.website.common.domain.DictData" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into tbl_dict_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sort!=null">`sort`,</if>
+            <if test="dictLabel!=null">`dict_label`,</if>
+            <if test="dictValue!=null">`dict_value`,</if>
+            <if test="dictType!=null">`dict_type`,</if>
+            <if test="status!=null">`status`,</if>
+            <if test="updateBy!=null">`update_by`,</if>
+            <if test="createBy!=null">`create_by`,</if>
+            <if test="remark!=null">`remark`,</if>
+            <if test="createTime!=null">`create_time`,</if>
+            <if test="updateTime!=null">`update_time`,</if>
+        </trim>
+        value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sort!=null">#{sort},</if>
+            <if test="dictLabel!=null">#{dictLabel},</if>
+            <if test="dictValue!=null">#{dictValue},</if>
+            <if test="dictType!=null">#{dictType},</if>
+            <if test="status!=null">#{status},</if>
+            <if test="updateBy!=null">#{updateBy},</if>
+            <if test="createBy!=null">#{createBy},</if>
+            <if test="remark!=null">#{remark},</if>
+            <if test="createTime!=null">#{createTime},</if>
+            <if test="updateTime!=null">#{updateTime},</if>
+        </trim>
+    </insert>
+</mapper>
